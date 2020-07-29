@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="phone">
+
+	<select id="phonelist" resultType="phonedto">
+		select * from
+		(select name, email from phone order by idx DESC)
+	</select>
+
+	<select id="countPhone" parameterType="int" resultType="int">
+		SELECT count(*) FROM phone
+	</select>
+	<!-- 페이징 처리 후 게시글 조회 --> 
+	<select id="selectPhone" parameterType="com.spring.home.utils.PagingVO" resultType="phonedto">
+		SELECT 
+			   idx,
+			   name,
+			   phonenum
+		FROM (
+			SELECT ROWNUM RN, A.* 
+				FROM (
+						SELECT * 
+						FROM phone
+						ORDER BY idx DESC 
+						) A
+				)
+	WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+
+	<insert id="phonewrite">
+		insert into phone(idx, userid, phonenum, name, email, memo)
+		values(phone_seq.nextval, #{userid}, #{phonenum}, #{name},#{email},#{memo})
+	</insert>
+
+	<delete id="phonedelete">
+		delete from phone
+		where idx=#{idx}
+	</delete>
+
+	<select id="phonedetail" resultType="phonedto">
+		select * from phone
+		where idx=#{idx}
+	</select>
+
+	<update id="phoneupdate">
+		update phone
+		set name=#{name}, phonenum=#{phonenum}, email=#{email}, memo=#{memo}
+		where idx=#{idx}
+	</update>
+</mapper>

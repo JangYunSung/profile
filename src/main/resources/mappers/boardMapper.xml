@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="board">
+
+	<select id="boardlist" resultType="boarddto">
+		select * from
+		(select idx, userid, title, post_date from board order by idx asc)
+	</select>
+
+	<select id="countBoard" parameterType="int" resultType="int">
+		SELECT count(*) FROM board
+	</select>
+	<!-- 페이징 처리 후 게시글 조회 --> 
+	<select id="selectBoard" parameterType="com.spring.home.utils.PagingVO" resultType="boarddto">
+		SELECT idx, 
+			   userid,
+			   title,
+			   post_date 
+		FROM (
+			SELECT ROWNUM RN, A.* 
+				FROM (
+						SELECT * 
+						FROM BOARD 
+						ORDER BY idx DESC 
+						) A
+				)
+	WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+
+	<insert id="boardwrite">
+		insert into board(idx, userid, title, content, post_date)
+		values(board_seq.nextval, #{userid}, #{title}, #{content},
+		sysdate )
+	</insert>
+
+	<delete id="boarddelete">
+		delete from board
+		where idx=#{idx}
+	</delete>
+
+	<select id="boarddetail" resultType="boarddto">
+		select * from board
+		where
+		idx=#{idx}
+	</select>
+
+	<update id="boardupdate">
+		update board
+		set title=#{title}, content=#{content}
+		where idx=#{idx}
+	</update>
+</mapper>

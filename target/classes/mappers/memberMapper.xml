@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="member">
+	<insert id="insertMember">
+		insert into memberr(userid, userpw, useremail, username, usernum1, usernum2, join_date)
+		values(#{userid}, #{userpw}, #{useremail}, #{username}, #{usernum1}, #{usernum2}, sysdate)
+	</insert>
+	
+	<select id="memberlogin" resultType="int">
+		select count(*) from memberr
+		where userid=#{userid} and userpw=#{userpw}
+	</select>
+	
+	<select id="memberlist" resultType="memberdto">
+		select * from memberr
+		order by username
+	</select>
+	
+	<select id="memberview" resultType="memberdto">
+		select * from memberr
+		where userid=#{userid}
+	</select>
+	
+	<delete id="memberdelete">
+		delete from memberr
+		where userid=#{userid} 
+	</delete>
+	
+	<select id="myinfo" resultType="memberdto">
+		select * from memberr
+		where userid=#{userid}
+	</select>
+	
+	<update id="membermodify">
+		update memberr
+		set userpw=#{userpw}, useremail=#{useremail}, username=#{username}, usernum1=#{usernum1}, usernum2=#{usernum2}
+		where userid=#{userid}
+	</update>
+	
+</mapper>
