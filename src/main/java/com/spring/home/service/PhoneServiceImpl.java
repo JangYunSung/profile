@@ -3,6 +3,7 @@ package com.spring.home.service;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
@@ -51,8 +52,8 @@ public class PhoneServiceImpl implements PhoneService {
 	}
 
 	@Override
-	public List<PhoneDTO> selectPhone(PagingVO vo) {
-		return phonedao.selectPhone(vo);
+	public List<PhoneDTO> selectPhone(PagingVO vo , HttpSession hs) {
+		return phonedao.selectPhone(vo,hs);
 	}
 	
 	

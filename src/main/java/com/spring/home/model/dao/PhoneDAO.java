@@ -2,6 +2,8 @@ package com.spring.home.model.dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.spring.home.model.dto.PhoneDTO;
 import com.spring.home.utils.PagingVO;
 
@@ -18,5 +20,5 @@ public interface PhoneDAO {
 	public int countPhone();
 
 	// 페이징 처리 게시글 조회
-	public List<PhoneDTO> selectPhone(PagingVO vo );
+	public List<PhoneDTO> selectPhone(PagingVO vo, HttpSession hs);
 }

@@ -26,9 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						SELECT * 
 						FROM phone
 						ORDER BY idx DESC 
-						) A
-				)
-	WHERE RN BETWEEN #{start} AND #{end}
+						) A , MEMBERR m WHERE m.userid = a.userid )
+	WHERE (RN BETWEEN #{start} AND #{end}) AND (userid = #{userid}) 
 	</select>
 
 	<insert id="phonewrite">

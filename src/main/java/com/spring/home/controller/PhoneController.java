@@ -3,6 +3,7 @@ package com.spring.home.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,9 +31,9 @@ public class PhoneController {
 	 */
 	
 	@GetMapping("phonelist.pb")
-	public String phoneList(PagingVO vo, Model model
+	public String phoneList(PagingVO vo, Model model ,HttpSession hs
 			, @RequestParam(value="nowPage", required=false)String nowPage
-			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage){
 		
 		int total = phoneservice.countPhone();
 		if (nowPage == null && cntPerPage == null) {
@@ -44,8 +45,9 @@ public class PhoneController {
 			cntPerPage = "5";
 		}
 		vo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+	
 		model.addAttribute("paging", vo);
-		List<PhoneDTO> i = phoneservice.selectPhone(vo);
+		List<PhoneDTO> i = phoneservice.selectPhone(vo,hs);
 		model.addAttribute("phonepaging",i);
 		return "phone/phonePaging";
 	}

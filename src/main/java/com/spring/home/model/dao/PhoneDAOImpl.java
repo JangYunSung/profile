@@ -3,6 +3,7 @@ package com.spring.home.model.dao;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,8 @@ public class PhoneDAOImpl implements PhoneDAO {
 
 	@Inject
 	SqlSession sqlsession;
+	
+	//HttpSession hs;
 	
 	@Override
 	public List<PhoneDTO> phonelist() {
@@ -53,8 +56,10 @@ public class PhoneDAOImpl implements PhoneDAO {
 		return sqlsession.selectOne("phone.countPhone");
 	}
 	@Override
-	public List<PhoneDTO> selectPhone(PagingVO vo ) {
+	public List<PhoneDTO> selectPhone(PagingVO vo, HttpSession hs) {
 		// TODO Auto-generated method stub
+		String usid = (String)hs.getAttribute("userid");
+		vo.setUserid(usid);
 		return sqlsession.selectList("phone.selectPhone", vo);
 	}
 	
