@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>메인화면</title>
 
 </head>
 <body>
@@ -17,8 +17,6 @@
 <a href="phone/phonelist.pb" style="text-decoration:none">주소록</a>&nbsp; | &nbsp;
 <a href="./" style="text-decoration:none">로그 아웃</a>
 <% } else { %>
-<!-- 로그인한 사람이 일반유저일 때 -->
-<h2><%=session.getAttribute("userid")%>님 환영합니다.</h2>
 <a href="myinfo.do?userid=<%=session.getAttribute("userid")%>" style="text-decoration:none">내 정보 보기</a>&nbsp; | &nbsp;
 <a href="board/blist.bo" style="text-decoration:none">게시판</a>&nbsp; | &nbsp;
 <a href="phone/phonelist.pb" style="text-decoration:none">주소록</a>&nbsp; | &nbsp;

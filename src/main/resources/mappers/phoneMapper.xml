@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				FROM (
 						SELECT * 
 						FROM phone
-						ORDER BY idx DESC 
+						ORDER BY name ASC 
 						) A , MEMBERR m WHERE m.userid = a.userid )
 	WHERE (RN BETWEEN #{start} AND #{end}) AND (userid = #{userid}) 
 	</select>
